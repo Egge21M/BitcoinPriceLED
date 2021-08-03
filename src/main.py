@@ -1,7 +1,7 @@
 from prices import getPrices
 import time
 from datetime import datetime
-from neopixel import *
+from rpi_ws281x import *
 from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT, testing
 
 import logging
@@ -10,7 +10,7 @@ logging.basicConfig(filename='error.log')
 
 errorCount = 0
 
-strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 
 
 
