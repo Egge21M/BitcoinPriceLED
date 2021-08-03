@@ -2,20 +2,13 @@ from prices import getPrices
 import time
 from datetime import datetime
 from neopixel import *
+from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT, testing
 
 import logging
 
 logging.basicConfig(filename='error.log')
 
 errorCount = 0
-
-# LED Strip Config
-LED_COUNT = 32
-LED_PIN = 18
-LED_FREQ_HZ = 800000
-LED_DMA = 5
-LED_BRIGHTNESS = 100
-LED_INVERT = False
 
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 
@@ -35,42 +28,61 @@ def priceUpdater(currentPrice):
     currentPrice = getPrices('BTCUSD')
     return currentPrice, oldPrice
 
+def colorPicker(trend):
+    if trend > 0.4:
+        return 0
+    elif trend > 0.3:
+        return 38
+    elif trend > 0.2:
+        return 76
+    elif trend > 0.1:
+        return 115
+    elif trend >=0:
+        return 153
 
-def run():
+def main():
     currentPrice = getPrices('BTCUSD')
     errorCount = 0
     while True:
-        time.sleep(300)
+        if testing == True:
+            time.sleep(10)
+        else:
+            time.sleep(300)
+
+        now = datetime.now()
         try:
             strip.begin()
             prices = priceUpdater(currentPrice)
             oldPrice = prices[1]
             currentPrice = prices[0]
             trend = checkTrend(oldPrice, currentPrice)
-            now = datetime.now()
-            if errorCount > 3:
-                logging.error(f'ERROR-Mode activated - Currently {errorCount} failures in a row')
-                color = (247,147,26)
-                errorCount = 0
 
             if trend[0] == 1:
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{trend[1]}%')
-                color = (0, 255, 0)
+                color = (colorPicker(trend[1]), 255, colorPicker(trend[1]))
                 errorCount= 0
 
             elif trend == 0:
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{trend[1]}%')
-                color = (255, 0, 0)
+                color = (255, colorPicker(trend[1]), colorPicker(trend[1]))
                 errorCount = 0
-        
+            
+            for i in range(0, strip.numPixels()):
+                strip.setPixelColor(i, Color(color[0],color[1],color[2]))
+                strip.show()
+                time.sleep(0.1)
+
         except Exception as e:
             errorCount += 1
-        for i in range(0, strip.numPixels()):
-            strip.setPixelColor(i, Color(color[0],color[1],color[2]))
-            strip.show()
-            time.sleep(0.1)
+            if errorCount > 3:
+                logging.error(f'ERROR-Mode activated - Currently {errorCount} failures in a row')
+                for i in range(0, strip.numPixels()):
+                    strip.setPixelColor(i, Color(247,147,26))
+                    strip.show()
+                    time.sleep(0.1)
 
 
-run()
+if __name__ == "__main__":
+    main()
 
 

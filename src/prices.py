@@ -11,6 +11,6 @@ def getPrices(pair):
         dict = json.loads(r)
         return dict['last']
     except Exception as e:
-        logging.error(f'Error while getting current prices')
+        logging.error(f'Error "{e}"" while getting current prices')
         return None
 
