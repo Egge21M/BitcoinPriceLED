@@ -57,7 +57,7 @@ def main():
 
             if trend == '+':
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
-                r = colorPicker(trend[1])
+                r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
@@ -65,7 +65,7 @@ def main():
             elif trend == '-':
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
                 r = 255
-                g = colorPicker(trend[1])
+                g = colorPicker(changePercentage)
                 b = 0
                 errorCount = 0
 
