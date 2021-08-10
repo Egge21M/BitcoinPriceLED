@@ -66,11 +66,14 @@ def main():
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{trend[1]}%')
                 color = (255, colorPicker(trend[1]), colorPicker(trend[1]))
                 errorCount = 0
+
+            if testing == True:
+                print(color)
             
             for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(color[0],color[1],color[2]))
                 strip.show()
-                time.sleep(0.1)
+            
 
         except Exception as e:
             errorCount += 1
