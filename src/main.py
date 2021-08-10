@@ -93,6 +93,8 @@ def main():
                     strip.setPixelColor(i, Color(247,147,26))
                     strip.show()
                     time.sleep(0.1)
+        except KeyboardInterrupt:
+            exit_handler()
 
 
 if __name__ == "__main__":
