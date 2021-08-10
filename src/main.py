@@ -100,4 +100,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         exit_handler
 
-atexit.register(exit_handler())
+atexit.register(exit_handler)
