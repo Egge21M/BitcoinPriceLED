@@ -13,31 +13,27 @@ errorCount = 0
 strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 
 
-
-def checkTrend(oldPrice, currentPrice):
-    quotient = float(currentPrice) / float(oldPrice)
-    if quotient >= 1: 
-        trend = quotient - 1
-        return 1, trend
-    elif quotient < 1:
-        trend = 1 - quotient
-        return 0, trend
-
 def priceUpdater(currentPrice):
     oldPrice = currentPrice
     currentPrice = getPrices('BTCUSD')
-    return currentPrice, oldPrice
+    change = float(currentPrice) - float(oldPrice)
+    changePercentage = (abs(change)/float(oldPrice))*100
+    if change > 0:
+        trend= '+'
+    else:
+        trend= '-'
+    return currentPrice, oldPrice, trend, changePercentage
 
-def colorPicker(trend):
-    if trend > 0.4:
+def colorPicker(changePercentage):
+    if changePercentage > 4:
         return 0
-    elif trend > 0.3:
+    elif changePercentage > 3:
         return 40
-    elif trend > 0.2:
+    elif changePercentage > 2:
         return 80
-    elif trend > 0.1:
+    elif changePercentage > 1:
         return 120
-    elif trend >=0:
+    elif changePercentage >=0:
         return 160
 
 def main():
@@ -55,17 +51,19 @@ def main():
             prices = priceUpdater(currentPrice)
             oldPrice = prices[1]
             currentPrice = prices[0]
-            trend = checkTrend(oldPrice, currentPrice)
+            changePercentage = prices[3]
+            trend = prices[2]
+            
 
-            if trend[0] == 1:
-                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{trend[1]}%')
+            if trend == '+':
+                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
                 r = colorPicker(trend[1])
                 g = 255
                 b = 0
                 errorCount= 0
 
-            elif trend == 0:
-                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{trend[1]}%')
+            elif trend == '-':
+                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
                 r = 255
                 g = colorPicker(trend[1])
                 b = 0
