@@ -32,13 +32,13 @@ def colorPicker(trend):
     if trend > 0.4:
         return 0
     elif trend > 0.3:
-        return 38
+        return 20
     elif trend > 0.2:
-        return 76
+        return 40
     elif trend > 0.1:
-        return 115
+        return 60
     elif trend >=0:
-        return 153
+        return 80
 
 def main():
     currentPrice = getPrices('BTCUSD')
