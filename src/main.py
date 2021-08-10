@@ -1,5 +1,6 @@
 from prices import getPrices
 import time
+import atexit
 from datetime import datetime
 from rpi_ws281x import *
 from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT, testing
@@ -24,17 +25,24 @@ def priceUpdater(currentPrice):
         trend= '-'
     return currentPrice, oldPrice, trend, changePercentage
 
+
+def exit_handler():
+    for i in range(0, strip.numPixels()):
+        strip.setPixelColor(i, Color(0,0,0))
+        strip.show()
+                    
+
 def colorPicker(changePercentage):
     if changePercentage > 4:
         return 0
     elif changePercentage > 3:
-        return 40
+        return 20
     elif changePercentage > 2:
-        return 80
+        return 40
     elif changePercentage > 1:
-        return 120
+        return 60
     elif changePercentage >=0:
-        return 160
+        return 80
 
 def main():
     currentPrice = getPrices('BTCUSD')
@@ -90,4 +98,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-
+atexit.register(exit_handler())
