@@ -82,7 +82,7 @@ def main():
             
             for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(r,g,b))
-                strip.show()
+            strip.show()
             
 
         except Exception as e:
@@ -91,13 +91,13 @@ def main():
                 logging.error(f'ERROR-Mode activated - Currently {errorCount} failures in a row')
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(247,147,26))
-                    strip.show()
-                    time.sleep(0.1)
-        except KeyboardInterrupt:
-            exit_handler()
+                strip.show()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit_handler
 
 atexit.register(exit_handler())
