@@ -32,13 +32,13 @@ def colorPicker(trend):
     if trend > 0.4:
         return 0
     elif trend > 0.3:
-        return 20
-    elif trend > 0.2:
         return 40
-    elif trend > 0.1:
-        return 60
-    elif trend >=0:
+    elif trend > 0.2:
         return 80
+    elif trend > 0.1:
+        return 120
+    elif trend >=0:
+        return 160
 
 def main():
     currentPrice = getPrices('BTCUSD')
@@ -59,19 +59,23 @@ def main():
 
             if trend[0] == 1:
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{trend[1]}%')
-                color = (colorPicker(trend[1]), 255, colorPicker(trend[1]))
+                r = colorPicker(trend[1])
+                g = 255
+                b = 0
                 errorCount= 0
 
             elif trend == 0:
                 print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{trend[1]}%')
-                color = (255, colorPicker(trend[1]), colorPicker(trend[1]))
+                r = 255
+                g = colorPicker(trend[1])
+                b = 0
                 errorCount = 0
 
             if testing == True:
-                print(color)
+                print(r,g,b)
             
             for i in range(0, strip.numPixels()):
-                strip.setPixelColor(i, Color(color[0],color[1],color[2]))
+                strip.setPixelColor(i, Color(r,g,b))
                 strip.show()
             
 
