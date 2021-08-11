@@ -15,14 +15,32 @@
 
 ## Installation
 
+### Assembly
+
+### Flash the Micro SD card
+
+### Install dependencies
+
+```shell
+sudo apt-get update
+sudo apt-get install build-essential python-dev scons swig git python3 python3-pip # add -y at the end to automatically a
+```
+
+### Install Python Library
+
+### Download BitcoinPriceLED
+
+```shell
+git clone https://github.com/Egge7/BitcoinPriceLED.git
+```
+
 ### Creating systemd service
 
 ```shell
 sudo nano /etc/systemd/system/led.service
 ```
 
-`
-[Unit]
+`[Unit]
 Description=Bitcoin Price LED Service
 After=network.target
 
@@ -33,8 +51,7 @@ ExecStart=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/main.py
 ExecStopPost=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/off.py
 
 [Install]
-WantedBy=multi-user.target
-`
+WantedBy=multi-user.target`
 
 ```shell
 sudo systemctl daemon-reload

@@ -49,11 +49,6 @@ def main():
     currentPrice = getPrices('BTCUSD')
     errorCount = 0
     while True:
-        if testing == True:
-            time.sleep(10)
-        else:
-            time.sleep(300)
-
         now = datetime.now()
         try:
             strip.begin()
@@ -63,38 +58,41 @@ def main():
             changePercentage = prices[3]
             trend = prices[2]
             
-
             if trend == '+':
-                # print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                # print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
                 errorCount = 0
-
-            if testing == True:
-                print(r,g,b)
             
             for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(r,g,b))
-            strip.show()
-            
+            strip.show()         
+
 
         except Exception as e:
             errorCount += 1
+            logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR: {e}')
+            
             if errorCount > 3:
                 now = datetime.now()
-                time = now.strftime("%d/%m/%Y %H:%M:%S")
-                logging.error(f'{time} - ERROR-Mode activated - Currently {errorCount} failures in a row')
+                logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
+                
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
+    
+        if testing == True:
+            time.sleep(10)
+        else:
+            time.sleep(300)
 
 
 if __name__ == "__main__":
