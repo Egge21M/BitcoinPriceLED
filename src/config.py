@@ -7,4 +7,4 @@ LED_BRIGHTNESS = 100
 LED_INVERT = False
 
 # Testmode
-testing = True
+testing = False

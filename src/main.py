@@ -27,9 +27,10 @@ def priceUpdater(currentPrice):
 
 
 def exit_handler():
+    strip.begin()
     for i in range(0, strip.numPixels()):
         strip.setPixelColor(i, Color(0,0,0))
-        strip.show()
+    strip.show()
                     
 
 def colorPicker(changePercentage):
@@ -64,14 +65,14 @@ def main():
             
 
             if trend == '+':
-                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
+                # print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
+                # print(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
@@ -88,9 +89,11 @@ def main():
         except Exception as e:
             errorCount += 1
             if errorCount > 3:
-                logging.error(f'ERROR-Mode activated - Currently {errorCount} failures in a row')
+                now = datetime.now()
+                time = now.strftime("%d/%m/%Y %H:%M:%S")
+                logging.error(f'{time} - ERROR-Mode activated - Currently {errorCount} failures in a row')
                 for i in range(0, strip.numPixels()):
-                    strip.setPixelColor(i, Color(247,147,26))
+                    strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
 
 
