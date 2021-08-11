@@ -7,7 +7,7 @@ from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED
 
 import logging
 
-logging.basicConfig(filename='error.log')
+logging.basicConfig(filename='/home/pi/BitcoinPriceLED/led.log', filemode='w', level=logging.DEBUG)
 
 errorCount = 0
 
@@ -92,7 +92,7 @@ def main():
         if testing == True:
             time.sleep(10)
         else:
-            time.sleep(300)
+            time.sleep(900)
 
 
 if __name__ == "__main__":
