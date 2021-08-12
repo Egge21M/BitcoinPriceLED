@@ -52,15 +52,17 @@ def main():
     strip.begin()
     while True:
         now = datetime.now()
-        hour = int(now.strftime('%H'))
-        brightness = strip.getBrightness()
         
-        if nightmode == True and hour > beginSleep or hour < stopSleep:
+        # Checks nightmode and adjusts brightness accordingly
+
+        hour = int(now.strftime('%H'))
+        if nightmode == True and hour >= beginSleep or hour < stopSleep:
             strip.setBrightness(20)
             nightmodeActive = True
         else:
             strip.setBrightness(100)
             nightmodeActive = False
+        brightness = strip.getBrightness()
 
         try:
             prices = priceUpdater(currentPrice)
