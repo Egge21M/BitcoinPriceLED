@@ -52,12 +52,15 @@ def main():
     strip.begin()
     while True:
         now = datetime.now()
-        hour = now.strftime('%H')
+        hour = int(now.strftime('%H'))
+        brightness = strip.getBrightness()
         
         if nightmode == True and hour > beginSleep or hour < stopSleep:
             strip.setBrightness(20)
+            nightmodeActive = True
         else:
             strip.setBrightness(100)
+            nightmodeActive = False
 
         try:
             prices = priceUpdater(currentPrice)
@@ -67,14 +70,14 @@ def main():
             trend = prices[2]
             
             if trend == '+':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
@@ -98,7 +101,7 @@ def main():
                 strip.show()
     
         if testing == True:
-            time.sleep(10)
+            time.sleep(30)
         else:
             time.sleep(900)
 
