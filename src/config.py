@@ -8,3 +8,8 @@ LED_INVERT = False
 
 # Testmode
 testing = False
+
+# Nightmode
+nightmode = True
+beginSleep = 22
+stopSleep = 7

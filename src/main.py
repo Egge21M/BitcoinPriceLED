@@ -3,7 +3,8 @@ import time
 import atexit
 from datetime import datetime
 from rpi_ws281x import *
-from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT, testing
+from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT
+from config import testing, nightmode, beginSleep, stopSleep
 
 import logging
 
@@ -48,10 +49,17 @@ def colorPicker(changePercentage):
 def main():
     currentPrice = getPrices('BTCUSD')
     errorCount = 0
+    strip.begin()
     while True:
         now = datetime.now()
+        hour = now.strftime('%H')
+        
+        if nightmode == True and hour > beginSleep or hour < stopSleep:
+            strip.setBrightness(20)
+        else:
+            strip.setBrightness(100)
+
         try:
-            strip.begin()
             prices = priceUpdater(currentPrice)
             oldPrice = prices[1]
             currentPrice = prices[0]
