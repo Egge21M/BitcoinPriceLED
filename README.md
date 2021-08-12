@@ -1,6 +1,9 @@
 # BitcoinPriceLED
  
-*Represents the current BTC/USD trend with a RGB LED on a Raspberry Pi Zero WH with Waveshare RGB LED HAT.*
+*Represents the current BTC/USD trend with a RGB LED on a Raspberry Pi Zero WH with Waveshare RGB LED HAT. Made for a HODLITEMS case*
+
+![Prototype V1](/pictures/LED.jpg)
+*BitcoinPriceLED in a prototype case made by [HODLITEMS](https://hodlitems.com/).*
 
 ## Hardware
 
@@ -11,7 +14,7 @@
 
 *Current trend will be displayed using different colors. Positive trend -> green light, negative trend -> red light. Saturation is used to display percentage of price movement.*
 
-![colorscale](/Farbskala.png)
+![colorscale](/pictures/Farbskala.png)
 
 ## Installation
 
