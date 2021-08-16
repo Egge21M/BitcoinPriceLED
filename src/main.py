@@ -3,7 +3,8 @@ import time
 import atexit
 from datetime import datetime
 from rpi_ws281x import *
-from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT, testing
+from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT
+from config import testing, nightmode, beginSleep, stopSleep
 
 import logging
 
@@ -48,10 +49,22 @@ def colorPicker(changePercentage):
 def main():
     currentPrice = getPrices('BTCUSD')
     errorCount = 0
+    strip.begin()
     while True:
         now = datetime.now()
+        
+        # Checks nightmode and adjusts brightness accordingly
+
+        hour = int(now.strftime('%H'))
+        if nightmode == True and hour >= beginSleep or hour < stopSleep:
+            strip.setBrightness(5)
+            nightmodeActive = True
+        else:
+            strip.setBrightness(100)
+            nightmodeActive = False
+        brightness = strip.getBrightness()
+
         try:
-            strip.begin()
             prices = priceUpdater(currentPrice)
             oldPrice = prices[1]
             currentPrice = prices[0]
@@ -59,14 +72,14 @@ def main():
             trend = prices[2]
             
             if trend == '+':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}%')
+                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
@@ -90,7 +103,7 @@ def main():
                 strip.show()
     
         if testing == True:
-            time.sleep(10)
+            time.sleep(30)
         else:
             time.sleep(900)
 
