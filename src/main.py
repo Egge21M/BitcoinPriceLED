@@ -1,8 +1,9 @@
-from prices import getPrices
 import time
 import atexit
 from datetime import datetime
 from rpi_ws281x import *
+
+from prices import getPrices
 from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT
 from config import testing, nightmode, beginSleep, stopSleep
 
@@ -35,16 +36,12 @@ def exit_handler():
                     
 
 def colorPicker(changePercentage):
-    if changePercentage > 4:
+    if changePercentage > 2:
         return 0
-    elif changePercentage > 3:
-        return 20
-    elif changePercentage > 2:
-        return 40
     elif changePercentage > 1:
-        return 60
+        return 90
     elif changePercentage >=0:
-        return 80
+        return 180
 
 def main():
     currentPrice = getPrices('BTCUSD')
