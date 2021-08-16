@@ -57,7 +57,7 @@ def main():
 
         hour = int(now.strftime('%H'))
         if nightmode == True and hour >= beginSleep or hour < stopSleep:
-            strip.setBrightness(20)
+            strip.setBrightness(5)
             nightmodeActive = True
         else:
             strip.setBrightness(100)
