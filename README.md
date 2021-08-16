@@ -18,20 +18,44 @@
 
 ## Installation
 
+### Flashing the OS (& enabling SSH and Wifi)
+
+The easiest way to get your Raspberry Pi Zeros OS ready is to use the [Raspberry PI Imager](https://www.raspberrypi.org/software/). Download, install and launch the software, choose "Raspberry Pi OS Lite" from "Raspberry Pi OS (other)". Hit CTRL+Shift+X to bring up the advanced options. Enable SSH (which will be used later to control your Pi), enter a password for user "pi" and setup a custom hostname (eg. led.local). Enable Wifi and enter your WIFIs ssid and passkey.
+
+Optional: You can also configure a timezone (which might be usefull if you plan on using time-controlled features like nightmode).
+
+You can also download and flash the OS manually. You can find all avaiable Raspberry Pi OS [here](https://www.raspberrypi.org/software/operating-systems/).
+
 ### Assembly
 
-### Flash the Micro SD card
+Insert your microSD card into your Raspberry Pi Zero and put the LED-HAT on. Then connect the power plug.
+
+### Logging in via SSH
+
+Because our device has neither a display nor any peripherals you will need to control it using SSH and another machine. On your computer open up your OS' CLI (Windows: PowerShell, MacOS/Linux: Terminal) and connect to your Pi using the follwing command
+
+```shell
+ssh pi@<hostname>
+```
+
+If you setup a custom hostname, replace <hostname> with your custom one. If you didn't you can lookup the Pis IP by checking connected devices in your routers admin panel. Your CLI will ask you for the password you chose during the OS setup.
 
 ### Install dependencies
 
+Before you can run the Python-code that will make your LED light up, you will need to install some depented-upon software.
+
 ```shell
 sudo apt-get update
-sudo apt-get install build-essential python-dev scons swig git python3 python3-pip # add -y at the end to automatically a
+sudo apt-get install build-essential python-dev scons swig git python3 python3-pip
 ```
 
 ### Install LED-HAT Python Library
 
 Use the packet installer for Python (pip) to install the rpi_ws281x Python module (which is required to control the LED-HAT using Python)
+
+```shell
+sudo pip install rpi_ws281x
+```
 
 ### Download BitcoinPriceLED
 
@@ -45,8 +69,9 @@ git clone https://github.com/Egge7/BitcoinPriceLED.git
 
 Create a systemd service that will execute our Python script. This will run the script on startup and in the background, so you don't need to log-in via ssh everytime your Pi looses power
 
+create a new service file called 'led.service'
+
 ```shell
-# create a new service file called 'led.service'
 sudo nano /etc/systemd/system/led.service
 ```
 
@@ -65,6 +90,7 @@ ExecStopPost=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/off.py
 [Install]
 WantedBy=multi-user.target
 ```
+
 Reload systemctl deamon, enable the new service
 
 ```shell
@@ -78,3 +104,22 @@ Reboot to check if the new service will start on startup as intended
 sudo reboot
 ```
 
+### Optional: Configure your BitcoinPriceLED
+
+By default your LED will run 24/7 and represent current price-trends in a 30 minute loop. There is a config file named "config.py" which can be altered to alter the bahaviour of your BitcoinPriceLED. Make sure to restart your led.service everytime you change something by entering:
+
+```shell
+sudo systemctl restart led
+```
+
+#### Interval (soonTM)
+
+Default: 900
+
+This is the time in seconds your BitcoinPriceLED will wait before fetching a new price and calculating the trend. Please be aware that a very small interval (1-10 seconds) might result in your IP address getting blocked by the API provider.
+
+#### Nightmode
+
+Default: False
+
+Nightmode dims your LED at night. In order to activate this feature set "nightmode = True" and set the time where your LED should enter and leave nightmode (beginSleep and endSleep in 24h format).
