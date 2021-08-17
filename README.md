@@ -16,9 +16,9 @@
 
 ![colorscale](/pictures/Farbskala.png)
 
-## Installation
+## 🛠️ Installation
 
-### Flashing the OS (& enabling SSH and Wifi)
+### 💿 Flashing the OS (& enabling SSH and Wifi)
 
 The easiest way to get your Raspberry Pi Zeros OS ready is to use the [Raspberry PI Imager](https://www.raspberrypi.org/software/). Download, install and launch the software, choose "Raspberry Pi OS Lite" from "Raspberry Pi OS (other)". Hit CTRL+Shift+X to bring up the advanced options. Enable SSH (which will be used later to control your Pi), enter a password for user "pi" and setup a custom hostname (eg. led.local). Enable Wifi and enter your WIFIs ssid and passkey.
 
@@ -26,11 +26,11 @@ Optional: You can also configure a timezone (which might be usefull if you plan 
 
 You can also download and flash the OS manually. You can find all avaiable Raspberry Pi OS [here](https://www.raspberrypi.org/software/operating-systems/).
 
-### Assembly
+### 🔨 Assembly
 
 Insert your microSD card into your Raspberry Pi Zero and put the LED-HAT on. Then connect the power plug.
 
-### Logging in via SSH
+### 👨‍💻 Logging in via SSH
 
 Because our device has neither a display nor any peripherals you will need to control it using SSH and another machine. On your computer open up your OS' CLI (Windows: PowerShell, MacOS/Linux: Terminal) and connect to your Pi using the follwing command
 
@@ -40,7 +40,7 @@ ssh pi@<hostname>
 
 If you setup a custom hostname, replace <hostname> with your custom one. If you didn't you can lookup the Pis IP by checking connected devices in your routers admin panel. Your CLI will ask you for the password you chose during the OS setup.
 
-### Install dependencies
+### 🏗️ Install dependencies
 
 Before you can run the Python-code that will make your LED light up, you will need to install some depented-upon software.
 
@@ -49,7 +49,7 @@ sudo apt-get update
 sudo apt-get install git python3-pip
 ```
 
-### Install LED-HAT Python Library
+### 🚧 Install LED-HAT Python Library
 
 Use the packet installer for Python (pip) to install the rpi_ws281x Python module (which is required to control the LED-HAT using Python)
 
@@ -57,7 +57,7 @@ Use the packet installer for Python (pip) to install the rpi_ws281x Python modul
 sudo pip3 install rpi_ws281x
 ```
 
-### Download BitcoinPriceLED
+### 📁 Download BitcoinPriceLED
 
 Use Git to clone this repository onto your Raspberry Pi
 
@@ -124,6 +124,6 @@ Default: False
 
 Nightmode dims your LED at night. In order to activate this feature set "nightmode = True" and set the time where your LED should enter and leave nightmode (beginSleep and endSleep in 24h format).
 
-### 🧡 Donations 
+## 🧡 Donations 
 
 Please feel free to copy, fork and alter this project as you wish. If you would like to support me, you can leave a on-chain or lightning donation in my [tip-jar](https://tallyco.in/s/4wl2kh/)
