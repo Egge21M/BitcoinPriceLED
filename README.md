@@ -46,7 +46,7 @@ Before you can run the Python-code that will make your LED light up, you will ne
 
 ```shell
 sudo apt-get update
-sudo apt-get install build-essential python-dev scons swig git python3 python3-pip
+sudo apt-get install git python3-pip
 ```
 
 ### Install LED-HAT Python Library
@@ -54,7 +54,7 @@ sudo apt-get install build-essential python-dev scons swig git python3 python3-p
 Use the packet installer for Python (pip) to install the rpi_ws281x Python module (which is required to control the LED-HAT using Python)
 
 ```shell
-sudo pip install rpi_ws281x
+sudo pip3 install rpi_ws281x
 ```
 
 ### Download BitcoinPriceLED
@@ -65,7 +65,7 @@ Use Git to clone this repository onto your Raspberry Pi
 git clone https://github.com/Egge7/BitcoinPriceLED.git
 ```
 
-### Creating systemd service
+### 👷 Creating systemd service
 
 Create a systemd service that will execute our Python script. This will run the script on startup and in the background, so you don't need to log-in via ssh everytime your Pi looses power
 
@@ -104,7 +104,7 @@ Reboot to check if the new service will start on startup as intended
 sudo reboot
 ```
 
-### Optional: Configure your BitcoinPriceLED
+### 🧰 Optional: Configure your BitcoinPriceLED
 
 By default your LED will run 24/7 and represent current price-trends in a 30 minute loop. There is a config file named "config.py" which can be altered to alter the bahaviour of your BitcoinPriceLED. Make sure to restart your led.service everytime you change something by entering:
 
@@ -112,14 +112,18 @@ By default your LED will run 24/7 and represent current price-trends in a 30 min
 sudo systemctl restart led
 ```
 
-#### Interval (soonTM)
+#### ⏱️ Interval (soonTM)
 
 Default: 900
 
 This is the time in seconds your BitcoinPriceLED will wait before fetching a new price and calculating the trend. Please be aware that a very small interval (1-10 seconds) might result in your IP address getting blocked by the API provider.
 
-#### Nightmode
+#### 💤 Nightmode
 
 Default: False
 
 Nightmode dims your LED at night. In order to activate this feature set "nightmode = True" and set the time where your LED should enter and leave nightmode (beginSleep and endSleep in 24h format).
+
+### 🧡 Donations 
+
+Please feel free to copy, fork and alter this project as you wish. If you would like to support me, you can leave a on-chain or lightning donation in my [tip-jar](https://tallyco.in/s/4wl2kh/)
