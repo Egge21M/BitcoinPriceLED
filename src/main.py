@@ -36,9 +36,9 @@ def exit_handler():
                     
 
 def colorPicker(changePercentage):
-    if changePercentage > 2:
+    if changePercentage > 2.5:
         return 0
-    elif changePercentage > 1:
+    elif changePercentage > 0.5:
         return 90
     elif changePercentage >=0:
         return 180
@@ -54,7 +54,7 @@ def main():
 
         hour = int(now.strftime('%H'))
         if nightmode == True and hour >= beginSleep or hour < stopSleep:
-            strip.setBrightness(5)
+            strip.setBrightness(1)
             nightmodeActive = True
         else:
             strip.setBrightness(100)
