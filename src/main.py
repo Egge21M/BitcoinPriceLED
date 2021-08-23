@@ -1,3 +1,4 @@
+from os import stat
 import time
 import atexit
 from datetime import datetime
@@ -5,7 +6,7 @@ from rpi_ws281x import *
 
 from prices import getPrices
 from config import LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_BRIGHTNESS, LED_INVERT
-from config import testing, nightmode, beginSleep, stopSleep
+from config import testing, nightmode, beginSleep, stopSleep, static, staticColor, interval
 
 import logging
 
@@ -42,6 +43,24 @@ def colorPicker(changePercentage):
         return 90
     elif changePercentage >=0:
         return 180
+
+def staticLight():
+    strip.begin()
+    while True:
+        
+        # Checks nightmode and adjusts brightness accordingly
+        now = datetime.now()
+        hour = int(now.strftime('%H'))
+        if nightmode == True and hour >= beginSleep or hour < stopSleep:
+            strip.setBrightness(1)
+        else:
+            strip.setBrightness(100)
+        
+        for i in range(0, strip.numPixels()):
+                strip.setPixelColor(i, Color(staticColor))
+            strip.show()
+        time.sleep(900)
+
 
 def main():
     currentPrice = getPrices('BTCUSD')
@@ -98,16 +117,16 @@ def main():
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
-    
-        if testing == True:
-            time.sleep(30)
-        else:
-            time.sleep(900)
+
+        time.sleep(interval)
 
 
 if __name__ == "__main__":
     try:
-        main()
+        if static != True:
+            main()
+        else:
+            staticLight()
     except KeyboardInterrupt:
         exit_handler
 
