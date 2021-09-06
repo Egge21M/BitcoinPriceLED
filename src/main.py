@@ -58,7 +58,7 @@ def staticLight():
         
         for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(staticColor))
-            strip.show()
+        strip.show()
         time.sleep(900)
 
 
