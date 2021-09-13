@@ -1,0 +1,13 @@
+[Unit]
+Description=Bitcoin Price LED Server Service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+Restart=always
+ExecStart=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/server/app.py
+
+[Install]
+WantedBy=multi-user.target

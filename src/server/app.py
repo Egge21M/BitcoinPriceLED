@@ -26,7 +26,7 @@ def updateData():
     print(nightmodeChoice)
     print(interval)
     print(request.form)
-    configFile = open('../config.py')
+    configFile = open('/home/pi/BitcoinPriceLED/src/config.py')
     stringList = configFile.readlines()
     configFile.close()
     
@@ -47,11 +47,11 @@ def updateData():
     if interval is not None:
         stringList[1] = f'interval={interval}\n'
 
-    with open('../config.py', 'w') as file:
+    with open('/home/pi/BitcoinPriceLED/src/config.py', 'w') as file:
         newContent = ''.join(stringList)
         print(newContent)
         file.write(newContent)
-    # os.system('sudo systemctl restart led')
+    os.system('sudo systemctl restart led')
 
     forward_message = "Updated cofig file... restarting service"
     return render_template('index.html', forward_message=forward_message)
