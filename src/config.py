@@ -1,8 +1,8 @@
 testing=False
-interval=555
-static=True
-staticColor =(255, 255, 255)
-nightmode=True
+interval=900
+static=False
+staticColor =(0, 0, 255)
+nightmode=False
 beginSleep=21
 stopSleep=4
 
