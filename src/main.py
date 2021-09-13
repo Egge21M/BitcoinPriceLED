@@ -103,7 +103,8 @@ def main():
             
             for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(r,g,b))
-            strip.show()         
+            strip.show()
+            time.sleep(interval)         
 
 
         except Exception as e:
@@ -117,8 +118,8 @@ def main():
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
-
-        time.sleep(interval)
+                time.sleep(60)
+            time.sleep(5)
 
 
 if __name__ == "__main__":
