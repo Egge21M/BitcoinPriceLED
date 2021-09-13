@@ -155,7 +155,7 @@ Default: False
 
 Nightmode dims your LED at night. In order to activate this feature set "nightmode = True" and set the time where your LED should enter and leave nightmode (beginSleep and endSleep in 24h format).
  
-![Webinterface](/pictures/Webinterface.png)
+![Webinterface](/pictures/Webinterface.jpg)
 *BitcoinPriceLED Webinterface.*
 
 ## 🧡 Donations 
