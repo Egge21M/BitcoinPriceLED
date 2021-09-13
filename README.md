@@ -65,9 +65,11 @@ Use Git to clone this repository onto your Raspberry Pi
 git clone https://github.com/Egge7/BitcoinPriceLED.git
 ```
 
-### 👷 Creating systemd service
+### 👷 Creating systemd services
 
-Create a systemd service that will execute our Python script. This will run the script on startup and in the background, so you don't need to log-in via ssh everytime your Pi looses power
+#### Creating led.service
+
+Create a systemd service that will execute our Python scripts. This will run the script on startup and in the background, so you don't need to log-in via ssh everytime your Pi looses power
 
 create a new service file called 'led.service'
 
@@ -90,12 +92,38 @@ ExecStopPost=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/off.py
 [Install]
 WantedBy=multi-user.target
 ```
+#### Creating ledServer.service
 
-Reload systemctl deamon, enable the new service
+Now create a second service called ledServer.service. This second service file starts the server for the webinterface.
+
+```shell
+sudo nano /etc/systemd/system/ledServer.service
+```
+
+and insert the follwing lines into the service file.
+
+```
+[Unit]
+Description=Bitcoin Price LED Server Service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+Restart=always
+ExecStart=/usr/bin/python3 /home/pi/BitcoinPriceLED/src/server/app.py
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload systemctl deamon, enable the new services
 
 ```shell
 sudo systemctl daemon-reload
 sudo systemctl enable led
+sudo systemctl enable ledServer
 ```
 
 Reboot to check if the new service will start on startup as intended
@@ -104,15 +132,18 @@ Reboot to check if the new service will start on startup as intended
 sudo reboot
 ```
 
-### 🧰 Optional: Configure your BitcoinPriceLED
+## 🧰 Optional: Configure your BitcoinPriceLED
 
-By default your LED will run 24/7 and represent current price-trends in a 30 minute loop. There is a config file named "config.py" which can be altered to alter the bahaviour of your BitcoinPriceLED. Make sure to restart your led.service everytime you change something by entering:
+By default your LED will run 24/7 and represent current price-trends in a 30 minute loop.
+BitcoinPriceLED comes with a webinterface to configure your LED. In your local network, simply open <hostname of your Pi>:5000 and adjust the settings to your liking
 
-```shell
-sudo systemctl restart led
-```
+#### 🎨 Static
 
-#### ⏱️ Interval (soonTM)
+Default: False
+
+This will stop your BitcoinPriceLED from representing the current Bitcoin prices and make it shine in a desired color. Simply switch on Staticmode and enter the HEX-Value (e.g. #FFFF00 for blue) of the desired color
+
+#### ⏱️ Interval
 
 Default: 900
 

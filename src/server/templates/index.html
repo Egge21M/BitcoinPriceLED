@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>BitcoinPriceLED</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+        <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}">
+        <link rel="icon" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+        <link rel="mask-icon" href="{{ url_for('static', filename='favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+    </head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='favicon/android-chrome-192x192.png') }}" alt="" width="50" height="50" class="d-inline-block align-text-center">
+            BitcoinPriceLED Web-Config
+            </a>
+        </div>
+    </nav>
+    <div class="container d-flex align-items-center justify-content-center" style=" margin-top: 20px;">
+        <div class="shadow bg-dark p-3 mb-10 rounded text-white" style="width: 350px;">
+            <h2 class="text-white"> Configure your BitcoinPriceLED</h2>
+            <form action="/update/" method="post" class="text-white">
+                <div class='container border rounded' style='margin-top: 20px; margin-bottom: 20px; padding: 5%;'>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="checkStatic" name ='static' value="true">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Static Color</label>
+                    </div>
+                    <p style='font-size: 80%;'> <i>When Static Color is enabled BitcoinPriceLED will be lit in a static color.</i></p>
+                    <div id='staticSettings' style='display: none;'>
+                        <p style='font-size: 80%;'> <i>Please enter the HEX Value of the desired color (e.g. #ffffff)</i></p>
+                        <label for="r">HEX-Value:</label><br>
+                        <input type="text" id="colorValue" name="colorValue" style="max-width: 33%;"><br>
+                    </div>
+                </div>
+
+                <div class='container border rounded' style='margin-top: 20px; margin-bottom: 20px; padding: 5%;'>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="checkNightmode" name='nightmode' value='true'>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Nightmode</label>
+                    </div>
+                    <p style='font-size: 80%;'> <i>When Nightmode is enabled BitcoinPriceLED will be dimmed between the selected hours.</i></p>
+                    <div id='nightmodeSettings' style='display: none;'>
+                        <label for="g">beginn Nightmode at</label><br>
+                        <input type="number" id="startNightmode" name="startNightmode" style="max-width: 33%;"><br>
+                        <label for="b">stop Nightmode at</label><br>
+                        <input type="number" id="stopNightmode" name="stopNightmode" style="max-width: 33%;"><br>
+                    </div>
+                </div>
+
+                <div class='container border rounded' style='margin-top: 20px; margin-bottom: 20px; padding: 5%;'>
+                    <p style='font-size: 80%;'> <i>Interval sets the time (in seconds) that BitcoinPriceLED will wait before fetisching a new price.</i></p>
+                    <div id='intervalSettings'>
+                        <label for="b">Interval:</label><br>
+                        <input type="number" placeholder='900' id="interval" name="interval" value ='900' style="max-width: 33%;"><br>
+                    </div>
+                </div>
+
+                <button name="forwardBtn" type="submit" class="btn btn-light">Update Config</button>
+            </form>
+            <div>{{ forward_message }}</div>
+
+        </div> 
+    </div>   
+    <!-- </div>
+    <div class="container" style=" margin-top: 20px;">
+        <div class="shadow bg-dark p-3 mb-10 rounded text-white"></div>
+    </div> -->
+    <footer class="bg-dark align-items-center text-white" style="margin-top: 20px; padding:20px">
+        <div style="text-align: center;">
+            Made with 🧡 by <a href='https://github.com/Egge7' target='_blank'>Egge</a>
+        </div>
+    </footer>
+    </div>
+    </body>
+  <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>
+</html>
+
+<!-- <script src="{{url_for('static', filename='somejavascriptfile.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}"> -->

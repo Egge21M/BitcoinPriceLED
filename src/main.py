@@ -57,7 +57,7 @@ def staticLight():
             strip.setBrightness(100)
         
         for i in range(0, strip.numPixels()):
-                strip.setPixelColor(i, Color(staticColor))
+                strip.setPixelColor(i, Color(staticColor[0],staticColor[1],staticColor[2]))
         strip.show()
         time.sleep(900)
 

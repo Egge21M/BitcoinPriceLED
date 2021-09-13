@@ -1,4 +1,7 @@
 *.pyc
 *.pyo
 *.log
-#/pictures/
+/pictures/
+.DS_STORE
+/Frontend/
+
