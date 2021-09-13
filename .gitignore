@@ -2,3 +2,5 @@
 *.pyo
 *.log
 #/pictures/
+.DS_STORE
+/Frontend
