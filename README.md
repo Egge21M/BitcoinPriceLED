@@ -1,6 +1,6 @@
 # BitcoinPriceLED
  
-*Represents the current BTC/USD trend with a RGB LED on a Raspberry Pi Zero WH with Waveshare RGB LED HAT. Made for a HODLITEMS case*
+*LED-lamp that represents the current Bitcoin price trend. Comes with a handy web-remote.*
 
 ![Prototype V1](/pictures/LED.jpg)
 *BitcoinPriceLED in a prototype case made by [HODLITEMS](https://hodlitems.com/).*
@@ -9,6 +9,8 @@
 
 * Raspberry Pi Zero WH [amazon](https://www.amazon.de/Raspberry-Pi-Zero-WH/dp/B07BHMRTTY)
 * Waveshare RGB LED Hat [amazon](https://www.amazon.de/Waveshare-RGB-LED-HAT-Expansion/dp/B06ZYLC1BJ)
+* HODLITEMS Case [comingSoon](#)
+
 
 ## Color scale
 

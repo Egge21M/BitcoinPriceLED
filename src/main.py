@@ -93,14 +93,14 @@ def main():
             trend = prices[2]
             
             if trend == '+':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
+                logging.info(f'Time: {now.strftime("%H:%M:%S")} - old price: {oldPrice}, current price: {currentPrice}, trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
+                logging.info(f'Time: {now.strftime("%H:%M:%S")} - old price: {oldPrice}, current price: {currentPrice}, trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
