@@ -60,7 +60,9 @@ def updateData():
 def stream():
     def generate():
         with open('/home/pi/BitcoinPriceLED/led.log') as file:
-            return file.read()
+            lines = file.readlines()
+            output = ''.join(lines[-25:])
+            return output
     return app.response_class(generate(), mimetype='text/plain')
 
 @app.route('/reboot')
