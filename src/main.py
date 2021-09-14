@@ -1,5 +1,6 @@
 from os import stat
 import time
+import os
 import atexit
 from datetime import datetime
 from rpi_ws281x import *
@@ -115,15 +116,22 @@ def main():
             errorCount += 1
             logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR: {e}')
             
-            if errorCount > 3:
+            if errorCount > 5:
                 now = datetime.now()
                 logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
                 
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
+                logging.error('Restarting led.service now')
+                os.system('sudo systemctl restart led')
                 time.sleep(60)
-            time.sleep(5)
+            if errorCount > 10:
+                logging.error('System seems to be stuck in an error-loop... Consider rebooting the system')
+                logging.error('Stoping led.service and ledServer.service now...')
+                os.system('sudo systemctl stop ledServer')
+                os.system('sudo systemctl stop led')
+            time.sleep(10)
 
 
 if __name__ == "__main__":

@@ -22,7 +22,7 @@ nightmode.addEventListener('change', function() {
 
 let output = document.getElementById('output');
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://localhost:5000/stream');
+xhr.open('GET', '/stream');
 xhr.send();
 
 setInterval(function() {
