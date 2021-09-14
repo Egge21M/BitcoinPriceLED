@@ -59,7 +59,7 @@ def updateData():
 @app.route('/stream')
 def stream():
     def generate():
-        with open('../led.log') as file:
+        with open('/home/pi/BitcoinPriceLED/led.log') as file:
             return file.read()
     return app.response_class(generate(), mimetype='text/plain')
 

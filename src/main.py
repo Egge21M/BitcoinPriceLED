@@ -11,7 +11,7 @@ from config import testing, nightmode, beginSleep, stopSleep, static, staticColo
 
 import logging
 
-logging.basicConfig(filename='/home/pi/BitcoinPriceLED/led.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='/home/pi/BitcoinPriceLED/led.log', filemode='a', level=logging.INFO)
 
 errorCount = 0
 
@@ -114,21 +114,21 @@ def main():
 
         except Exception as e:
             errorCount += 1
-            logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR: {e}')
+            now = datetime.now()
+            logging.error(f'{now.strftime("%H:%M:%S")} - ERROR: {e}')
             
             if errorCount > 5:
-                now = datetime.now()
-                logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
+                logging.error(f'{now.strftime("%H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
                 
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
-                logging.error('Restarting led.service now')
+                logging.error(f'{now.strftime("%H:%M:%S")} - Restarting led.service now')
                 os.system('sudo systemctl restart led')
                 time.sleep(60)
             if errorCount > 10:
-                logging.error('System seems to be stuck in an error-loop... Consider rebooting the system')
-                logging.error('Stoping led.service and ledServer.service now...')
+                logging.error(f'{now.strftime("%H:%M:%S")} - System seems to be stuck in an error-loop...')
+                logging.error(f'{now.strftime("%H:%M:%S")} - Stoping led.service and ledServer.service now...')
                 os.system('sudo systemctl stop ledServer')
                 os.system('sudo systemctl stop led')
             time.sleep(10)
