@@ -56,6 +56,25 @@ def updateData():
     forward_message = "Updated cofig file... restarting service"
     return render_template('index.html', forward_message=forward_message)
 
+@app.route('/stream')
+def stream():
+    def generate():
+        with open('../led.log') as file:
+            return file.read()
+    return app.response_class(generate(), mimetype='text/plain')
+
+@app.route('/reboot')
+def reboot():
+    os.system('sudo reboot')
+    system_message = "Rebooting LED now..."
+    return render_template('index.html', system_message=system_message)
+
+@app.route('/shutdown')
+def shutdown():
+    os.system('sudo shutdown -h now')
+    system_message = "Shutting down now..."
+    return render_template('index.html', system_message=system_message)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
 

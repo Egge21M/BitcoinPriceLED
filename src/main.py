@@ -63,7 +63,11 @@ def staticLight():
 
 
 def main():
-    currentPrice = getPrices('BTCUSD')
+    try:
+        currentPrice = getPrices('BTCUSD')
+    except:
+        currentPrice = 0
+    
     errorCount = 0
     strip.begin()
     while True:

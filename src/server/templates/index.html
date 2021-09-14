@@ -65,7 +65,19 @@
                 <button name="forwardBtn" type="submit" class="btn btn-light">Update Config</button>
             </form>
             <div>{{ forward_message }}</div>
-
+            <div class='container border rounded' style='margin-top: 20px; margin-bottom: 20px; padding: 5%;'>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="showExpert">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Expert Panel</label>
+                </div>
+                <div id='expert' style='display: none;'>
+                    <h3>Logs</h3>
+                    <a name="forwardBtn" href="#" class="btn btn-light" onclick="return confirm('Are you sure?')">Reboot LED</a>
+                    <a name="forwardBtn" href="#" class="btn btn-light" onclick="return confirm('Are you sure?')">Shutdown LED</a>
+                    <div>{{ system_message }}</div>
+                    <pre id='output' style='white-space: pre-wrap; word-break: keep-all; font-size: smaller;'></pre>
+                </div>
+            </div>
         </div> 
     </div>   
     <!-- </div>
