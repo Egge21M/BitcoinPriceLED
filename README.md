@@ -9,6 +9,9 @@
 
 * Raspberry Pi Zero WH [amazon](https://www.amazon.de/Raspberry-Pi-Zero-WH/dp/B07BHMRTTY)
 * Waveshare RGB LED Hat [amazon](https://www.amazon.de/Waveshare-RGB-LED-HAT-Expansion/dp/B06ZYLC1BJ)
+* 1A/5W USB Charger
+* Micro-USB Cable
+
 * HODLITEMS Case [comingSoon](#)
 
 
@@ -53,10 +56,10 @@ sudo apt-get install git python3-pip
 
 ### 🚧 Install LED-HAT Python Library
 
-Use the packet installer for Python (pip) to install the rpi_ws281x Python module (which is required to control the LED-HAT using Python)
+Use the packet installer for Python (pip) to install rpi_ws281x module (which is required to control the LED-HAT using Python) and Flask (which will act as a local mini-webserver that hosts the webinterface)
 
 ```shell
-sudo pip3 install rpi_ws281x
+sudo pip3 install rpi_ws281x flask
 ```
 
 ### 📁 Download BitcoinPriceLED
@@ -83,7 +86,7 @@ Insert the following lines into the service file. This will execute the Python-s
 ```
 [Unit]
 Description=Bitcoin Price LED Service
-After=network.target
+After=network-online.target
 
 [Service]
 Type=simple
@@ -107,7 +110,7 @@ and insert the follwing lines into the service file.
 ```
 [Unit]
 Description=Bitcoin Price LED Server Service
-After=network.target
+After=network-online.target
 
 [Service]
 Type=simple
@@ -137,7 +140,7 @@ sudo reboot
 ## 🧰 Optional: Configure your BitcoinPriceLED
 
 By default your LED will run 24/7 and represent current price-trends in a 30 minute loop.
-BitcoinPriceLED comes with a webinterface to configure your LED. In your local network, simply open <hostname of your Pi>:5000 and adjust the settings to your liking
+BitcoinPriceLED comes with a webinterface to configure your LED. In your local network, simply open <hostname of your Pi>:5000 and adjust the settings to your liking.
 
 #### 🎨 Static
 
