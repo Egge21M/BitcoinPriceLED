@@ -53,7 +53,7 @@ def updateData():
         file.write(newContent)
     os.system('sudo systemctl restart led')
 
-    forward_message = "Updated cofig file... restarting service"
+    forward_message = "Updated config file... restarting service"
     return render_template('index.html', forward_message=forward_message)
 
 @app.route('/stream')
