@@ -1,5 +1,6 @@
 from os import stat
 import time
+import os
 import atexit
 from datetime import datetime
 from rpi_ws281x import *
@@ -10,7 +11,7 @@ from config import testing, nightmode, beginSleep, stopSleep, static, staticColo
 
 import logging
 
-logging.basicConfig(filename='/home/pi/BitcoinPriceLED/led.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='/home/pi/BitcoinPriceLED/led.log', filemode='a', level=logging.INFO)
 
 errorCount = 0
 
@@ -63,7 +64,11 @@ def staticLight():
 
 
 def main():
-    currentPrice = getPrices('BTCUSD')
+    try:
+        currentPrice = getPrices('BTCUSD')
+    except:
+        currentPrice = 0
+    
     errorCount = 0
     strip.begin()
     while True:
@@ -88,14 +93,14 @@ def main():
             trend = prices[2]
             
             if trend == '+':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
+                logging.info(f'Time: {now.strftime("%H:%M:%S")} - old price: {oldPrice}, current price: {currentPrice}, trend: +{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = colorPicker(changePercentage)
                 g = 255
                 b = 0
                 errorCount= 0
 
             elif trend == '-':
-                logging.info(f'Uhrzeit: {now.strftime("%H:%M:%S")} - Alter Preis: {oldPrice}, aktueller Preis: {currentPrice}, Trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
+                logging.info(f'Time: {now.strftime("%H:%M:%S")} - old price: {oldPrice}, current price: {currentPrice}, trend: -{changePercentage}% - Nightmode: {nightmodeActive}, Brightness: {brightness}')
                 r = 255
                 g = colorPicker(changePercentage)
                 b = 0
@@ -109,17 +114,24 @@ def main():
 
         except Exception as e:
             errorCount += 1
-            logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR: {e}')
+            now = datetime.now()
+            logging.error(f'{now.strftime("%H:%M:%S")} - ERROR: {e}')
             
-            if errorCount > 3:
-                now = datetime.now()
-                logging.error(f'{now.strftime("%d/%m/%Y %H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
+            if errorCount > 5:
+                logging.error(f'{now.strftime("%H:%M:%S")} - ERROR-Mode activated - Currently {errorCount} failures in a row: {e}')
                 
                 for i in range(0, strip.numPixels()):
                     strip.setPixelColor(i, Color(230,0,125))
                 strip.show()
+                logging.error(f'{now.strftime("%H:%M:%S")} - Restarting led.service now')
+                os.system('sudo systemctl restart led')
                 time.sleep(60)
-            time.sleep(5)
+            if errorCount > 10:
+                logging.error(f'{now.strftime("%H:%M:%S")} - System seems to be stuck in an error-loop...')
+                logging.error(f'{now.strftime("%H:%M:%S")} - Stoping led.service and ledServer.service now...')
+                os.system('sudo systemctl stop ledServer')
+                os.system('sudo systemctl stop led')
+            time.sleep(10)
 
 
 if __name__ == "__main__":

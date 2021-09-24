@@ -53,8 +53,29 @@ def updateData():
         file.write(newContent)
     os.system('sudo systemctl restart led')
 
-    forward_message = "Updated cofig file... restarting service"
+    forward_message = "Updated config file... restarting service"
     return render_template('index.html', forward_message=forward_message)
+
+@app.route('/stream')
+def stream():
+    def generate():
+        with open('/home/pi/BitcoinPriceLED/led.log') as file:
+            lines = file.readlines()
+            output = ''.join(lines[-25:])
+            return output
+    return app.response_class(generate(), mimetype='text/plain')
+
+@app.route('/reboot')
+def reboot():
+    os.system('sudo reboot')
+    system_message = "Rebooting LED now..."
+    return render_template('index.html', system_message=system_message)
+
+@app.route('/shutdown')
+def shutdown():
+    os.system('sudo shutdown -h now')
+    system_message = "Shutting down now..."
+    return render_template('index.html', system_message=system_message)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

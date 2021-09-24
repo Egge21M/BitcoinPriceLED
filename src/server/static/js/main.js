@@ -19,3 +19,23 @@ nightmode.addEventListener('change', function() {
         nightmodeSettings.removeAttribute('style');
     }
 });
+
+let output = document.getElementById('output');
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/stream');
+xhr.send();
+
+setInterval(function() {
+    output.textContent = xhr.responseText;
+}, 1000);
+
+let expert = document.getElementById('expert')
+let expertTrigger = document.getElementById('showExpert');
+expertTrigger.addEventListener('change', e => {
+    if (expertTrigger.checked == true) {
+        expert.style.removeProperty('display');
+    } else {
+        expert.style.setProperty('display','none')
+    }
+});
+
