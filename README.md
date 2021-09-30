@@ -9,21 +9,21 @@
 [BitcoinPriceLED](#bitcoinpriceled)
   * [Hardware](#hardware)
   * [Color scale](#color-scale)
-  * [🛠️ Installation](#----installation)
-    + [💿 Flashing the OS (& enabling SSH and Wifi)](#---flashing-the-os----enabling-ssh-and-wifi-)
-    + [🔨 Assembly](#---assembly)
-    + [👨‍💻 Logging in via SSH](#------logging-in-via-ssh)
-    + [🏗️ Install dependencies](#----install-dependencies)
-    + [🚧 Install LED-HAT Python Library](#---install-led-hat-python-library)
-    + [📁 Download BitcoinPriceLED](#---download-bitcoinpriceled)
-    + [👷 Creating systemd services](#---creating-systemd-services)
+  * [🛠️ Installation](#%EF%B8%8F-installation)
+    + [💿 Flashing the OS (& enabling SSH and Wifi)](#-flashing-the-os--enabling-ssh-and-wifi)
+    + [🔨 Assembly](#-assembly)
+    + [👨‍💻 Logging in via SSH](#-logging-in-via-ssh)
+    + [🏗️ Install dependencies](#%EF%B8%8F-install-dependencies)
+    + [🚧 Install LED-HAT Python Library](#-install-led-hat-python-library)
+    + [📁 Download BitcoinPriceLED](#-download-bitcoinpriceled)
+    + [👷 Creating systemd services](#-creating-systemd-services)
       - [Creating led.service](#creating-ledservice)
       - [Creating ledServer.service](#creating-ledserverservice)
-  * [🧰 Optional: Configure your BitcoinPriceLED](#---optional--configure-your-bitcoinpriceled)
-      - [🎨 Static](#---static)
-      - [⏱️ Interval](#---interval)
-      - [💤 Nightmode](#---nightmode)
-  * [🧡 Donations](#---donations)
+  * [🧰 Optional: Configure your BitcoinPriceLED](#-optional-configure-your-bitcoinpriceled)
+      - [🎨 Static](#-static)
+      - [⏱️ Interval](#%EF%B8%8F-interval)
+      - [💤 Nightmode](#-nightmode)
+  * [🧡 Donations](#-donations)
 
 
 
@@ -37,11 +37,19 @@
 * HODLITEMS Case [HODLITEMS](https://hodlitems.com/shop/)
 
 
-## Color scale
+## Features
+
+### Colorscale
 
 *Current trend will be displayed using different colors. Positive trend -> green light, negative trend -> red light. Saturation is used to display percentage of price movement.*
 
 ![colorscale](/pictures/Farbskala.png)
+
+### Web-Remote
+
+*BitcoinPriceLED comes with a handy remote that is hosted accessible via your browser.*
+
+![Webinterface](/pictures/Webinterface.jpg)
 
 ## 🛠️ Installation
 
@@ -181,9 +189,6 @@ This is the time in seconds your BitcoinPriceLED will wait before fetching a new
 Default: False
 
 Nightmode dims your LED at night. In order to activate this feature set "nightmode = True" and set the time where your LED should enter and leave nightmode (beginSleep and endSleep in 24h format).
- 
-![Webinterface](/pictures/Webinterface.jpg)
-*BitcoinPriceLED Webinterface.*
 
 ## 🧡 Donations 
 
