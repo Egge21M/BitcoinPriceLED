@@ -5,6 +5,28 @@
 ![Prototype V1](/pictures/LED.jpg)
 *BitcoinPriceLED in a prototype case made by [HODLITEMS](https://hodlitems.com/).*
 
+## Content
+[BitcoinPriceLED](#bitcoinpriceled)
+  * [Hardware](#hardware)
+  * [Color scale](#color-scale)
+  * [🛠️ Installation](#----installation)
+    + [💿 Flashing the OS (& enabling SSH and Wifi)](#---flashing-the-os----enabling-ssh-and-wifi-)
+    + [🔨 Assembly](#---assembly)
+    + [👨‍💻 Logging in via SSH](#------logging-in-via-ssh)
+    + [🏗️ Install dependencies](#----install-dependencies)
+    + [🚧 Install LED-HAT Python Library](#---install-led-hat-python-library)
+    + [📁 Download BitcoinPriceLED](#---download-bitcoinpriceled)
+    + [👷 Creating systemd services](#---creating-systemd-services)
+      - [Creating led.service](#creating-ledservice)
+      - [Creating ledServer.service](#creating-ledserverservice)
+  * [🧰 Optional: Configure your BitcoinPriceLED](#---optional--configure-your-bitcoinpriceled)
+      - [🎨 Static](#---static)
+      - [⏱️ Interval](#---interval)
+      - [💤 Nightmode](#---nightmode)
+  * [🧡 Donations](#---donations)
+
+
+
 ## Hardware
 
 * Raspberry Pi Zero WH [amazon](https://www.amazon.de/Raspberry-Pi-Zero-WH/dp/B07BHMRTTY)
@@ -12,7 +34,7 @@
 * 1A/5W USB Charger
 * Micro-USB Cable
 
-* HODLITEMS Case [comingSoon](#)
+* HODLITEMS Case [HODLITEMS](https://hodlitems.com/shop/)
 
 
 ## Color scale
@@ -165,4 +187,4 @@ Nightmode dims your LED at night. In order to activate this feature set "nightmo
 
 ## 🧡 Donations 
 
-Please feel free to copy, fork and alter this project as you wish. If you would like to support me, you can leave a on-chain or lightning donation in my [tip-jar](https://tallyco.in/s/4wl2kh/)
+Please feel free to copy, fork and alter this project as you wish. If you would like to support me, you can leave a on-chain or lightning donation in my [tip-jar](https://tallyco.in/Egge/)
