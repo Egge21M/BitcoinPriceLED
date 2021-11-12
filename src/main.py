@@ -52,7 +52,7 @@ def staticLight():
         # Checks nightmode and adjusts brightness accordingly
         now = datetime.now()
         hour = int(now.strftime('%H'))
-        if nightmode == True and hour >= beginSleep or hour < stopSleep:
+        if nightmode == True and hour >= beginSleep and hour < stopSleep:
             strip.setBrightness(1)
         else:
             strip.setBrightness(LED_BRIGHTNESS)
@@ -77,7 +77,7 @@ def main():
         # Checks nightmode and adjusts brightness accordingly
 
         hour = int(now.strftime('%H'))
-        if nightmode == True and hour >= beginSleep or hour < stopSleep:
+        if nightmode == True and hour >= beginSleep and hour < stopSleep:
             strip.setBrightness(1)
             nightmodeActive = True
         else:
