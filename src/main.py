@@ -55,7 +55,7 @@ def staticLight():
         if nightmode == True and hour >= beginSleep or hour < stopSleep:
             strip.setBrightness(1)
         else:
-            strip.setBrightness(100)
+            strip.setBrightness(LED_BRIGHTNESS)
         
         for i in range(0, strip.numPixels()):
                 strip.setPixelColor(i, Color(staticColor[0],staticColor[1],staticColor[2]))
@@ -81,7 +81,7 @@ def main():
             strip.setBrightness(1)
             nightmodeActive = True
         else:
-            strip.setBrightness(100)
+            strip.setBrightness(LED_BRIGHTNESS)
             nightmodeActive = False
         brightness = strip.getBrightness()
 
