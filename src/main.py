@@ -18,8 +18,9 @@ errorCount = 0
 strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 
 
-def priceUpdater(currentPrice):
-    oldPrice = currentPrice
+def priceUpdater(oldPrice):
+    with open('lastprice.txt','r') as lastprice:
+        lastprice.write(oldPrice)
     currentPrice = getPrices('BTCUSD')
     change = float(currentPrice) - float(oldPrice)
     changePercentage = (abs(change)/float(oldPrice))*100
@@ -64,10 +65,8 @@ def staticLight():
 
 
 def main():
-    try:
-        currentPrice = getPrices('BTCUSD')
-    except:
-        currentPrice = 0
+    with open('lastprice.txt') as lastprice:
+        oldPrice = float(lastprice.readline)
     
     errorCount = 0
     strip.begin()
@@ -86,7 +85,7 @@ def main():
         brightness = strip.getBrightness()
 
         try:
-            prices = priceUpdater(currentPrice)
+            prices = priceUpdater(oldPrice)
             oldPrice = prices[1]
             currentPrice = prices[0]
             changePercentage = prices[3]
